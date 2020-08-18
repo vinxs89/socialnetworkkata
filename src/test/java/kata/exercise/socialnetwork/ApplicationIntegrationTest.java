@@ -1,8 +1,8 @@
 package kata.exercise.socialnetwork;
 
 import kata.exercise.socialnetwork.commandhandler.DefaultCommandHandler;
-import kata.exercise.socialnetwork.services.DBService;
-import kata.exercise.socialnetwork.services.InMemoryDBService;
+import kata.exercise.socialnetwork.services.MessageService;
+import kata.exercise.socialnetwork.services.InMemoryMessageService;
 import kata.exercise.socialnetwork.services.InMemoryUserService;
 import kata.exercise.socialnetwork.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,8 +31,8 @@ public class ApplicationIntegrationTest {
         scanner = Mockito.mock(Scanner.class);
         printStream = new StringListPrintStream();
         UserService userService = InMemoryUserService.getInstance();
-        DBService dbService = InMemoryDBService.getInstance();
-        DefaultCommandHandler defaultCommandHandler = new DefaultCommandHandler(userService, dbService, printStream);
+        MessageService messageService = InMemoryMessageService.getInstance();
+        DefaultCommandHandler defaultCommandHandler = new DefaultCommandHandler(userService, messageService, printStream);
         application = new Application(scanner, defaultCommandHandler);
     }
 

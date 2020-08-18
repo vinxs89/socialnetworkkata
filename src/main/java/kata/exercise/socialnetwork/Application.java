@@ -2,7 +2,7 @@ package kata.exercise.socialnetwork;
 
 import kata.exercise.socialnetwork.commandhandler.CommandHandler;
 import kata.exercise.socialnetwork.commandhandler.DefaultCommandHandler;
-import kata.exercise.socialnetwork.services.InMemoryDBService;
+import kata.exercise.socialnetwork.services.InMemoryMessageService;
 import kata.exercise.socialnetwork.services.InMemoryUserService;
 
 import java.util.Scanner;
@@ -14,7 +14,7 @@ public class Application {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        CommandHandler commandHandler = new DefaultCommandHandler(InMemoryUserService.getInstance(), InMemoryDBService.getInstance(), System.out);
+        CommandHandler commandHandler = new DefaultCommandHandler(InMemoryUserService.getInstance(), InMemoryMessageService.getInstance(), System.out);
         new Application(scanner, commandHandler).run();
     }
 

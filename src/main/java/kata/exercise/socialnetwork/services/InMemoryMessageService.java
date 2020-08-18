@@ -9,12 +9,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InMemoryDBService implements DBService {
+public class InMemoryMessageService implements MessageService {
 
-    private static final InMemoryDBService INSTANCE = new InMemoryDBService();
+    private static final InMemoryMessageService INSTANCE = new InMemoryMessageService();
     private LinkedList<Message> messages = new LinkedList<>();
 
-    private InMemoryDBService() {
+    private InMemoryMessageService() {
     }
 
     @Override
@@ -45,7 +45,7 @@ public class InMemoryDBService implements DBService {
         return isUserMessage(message, user) || user.follows(message.getUser());
     }
 
-    public static InMemoryDBService getInstance() {
+    public static InMemoryMessageService getInstance() {
         return INSTANCE;
     }
 }

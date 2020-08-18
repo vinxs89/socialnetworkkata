@@ -2,7 +2,7 @@ package kata.exercise.socialnetwork.commandhandler;
 
 import kata.exercise.socialnetwork.models.Message;
 import kata.exercise.socialnetwork.models.User;
-import kata.exercise.socialnetwork.services.DBService;
+import kata.exercise.socialnetwork.services.MessageService;
 import kata.exercise.socialnetwork.services.UserService;
 
 import java.io.PrintStream;
@@ -14,12 +14,12 @@ import java.util.Objects;
 public class DefaultCommandHandler implements CommandHandler {
 
     private UserService userService;
-    private DBService dbService;
+    private MessageService messageService;
     private PrintStream printStream;
 
-    public DefaultCommandHandler(UserService userService, DBService dbService, PrintStream printStream) {
+    public DefaultCommandHandler(UserService userService, MessageService messageService, PrintStream printStream) {
         this.userService = userService;
-        this.dbService = dbService;
+        this.messageService = messageService;
         this.printStream = printStream;
     }
 
@@ -33,10 +33,10 @@ public class DefaultCommandHandler implements CommandHandler {
             case POST:
                 List<String> toList = Arrays.asList(splitInput);
                 String message = String.join(" ", toList.subList(2, toList.size()));
-                dbService.addMessage(message, user);
+                messageService.addMessage(message, user);
                 break;
             case READ:
-                Collection<Message> userMessages = this.dbService.getMessages(user);
+                Collection<Message> userMessages = this.messageService.getMessages(user);
                 userMessages.forEach(m -> this.printStream.println(m.formatForUser()));
                 break;
             case FOLLOW:
@@ -44,7 +44,7 @@ public class DefaultCommandHandler implements CommandHandler {
                 user.follow(user2);
                 break;
             case WALL:
-                Collection<Message> userWall = this.dbService.getWall(user);
+                Collection<Message> userWall = this.messageService.getWall(user);
                 userWall.forEach(m -> this.printStream.println(m.formatForWall()));
                 break;
         }

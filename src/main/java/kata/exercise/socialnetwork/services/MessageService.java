@@ -5,7 +5,7 @@ import kata.exercise.socialnetwork.models.User;
 
 import java.util.Collection;
 
-public interface DBService {
+public interface MessageService {
 
     void addMessage(String message, User user);
 
