@@ -1,15 +1,16 @@
 package kata.exercise.socialnetwork.models;
 
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import kata.exercise.socialnetwork.utils.TimeUtils;
+
+import java.time.LocalDateTime;
 
 public class Message {
 
     private final String text;
     private final User user;
-    private final Date date;
+    private final LocalDateTime date;
 
-    public Message(String text, User user, Date date) {
+    public Message(String text, User user, LocalDateTime date) {
         this.text = text;
         this.user = user;
         this.date = date;
@@ -23,29 +24,11 @@ public class Message {
         return user;
     }
 
-    private String formatDate(Date date) {
-        Date now = new Date();
-        long diff = now.getTime() - date.getTime();
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(diff);
-        if (seconds > 60) {
-            long minutes = TimeUnit.SECONDS.toMinutes(seconds);
-            if (minutes == 1) {
-                return "1 minute ago";
-            } else {
-                return minutes + " minutes ago";
-            }
-        } else if (seconds == 1) {
-            return "1 second ago";
-        } else {
-            return seconds + " seconds ago";
-        }
-    }
-
     public String getTextString() {
-        return String.format("%s (%s)", text, formatDate(date));
+        return String.format("%s (%s)", text, TimeUtils.socialPrint(date, LocalDateTime.now()));
     }
 
     public String getMessageString() {
-        return String.format("%s: %s (%s)", user.getName(), text, formatDate(date));
+        return String.format("%s - %s (%s)", user.getName(), text, TimeUtils.socialPrint(date, LocalDateTime.now()));
     }
 }

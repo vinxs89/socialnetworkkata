@@ -1,4 +1,4 @@
-package kata.exercise.socialnetwork;
+package kata.exercise.socialnetwork.commandhandler;
 
 import kata.exercise.socialnetwork.models.Message;
 import kata.exercise.socialnetwork.models.User;
@@ -11,9 +11,9 @@ import org.mockito.Mockito;
 import java.io.PrintStream;
 import java.util.Collections;
 
-class CommandHandlerTest {
+class DefaultCommandHandlerTest {
 
-    private CommandHandler commandHandler;
+    private DefaultCommandHandler defaultCommandHandler;
 
     private PrintStream printStream;
     private UserService userService;
@@ -31,7 +31,7 @@ class CommandHandlerTest {
         user1 = Mockito.mock(User.class);
         user2 = Mockito.mock(User.class);
 
-        commandHandler = new CommandHandler(userService, dbService, printStream);
+        defaultCommandHandler = new DefaultCommandHandler(userService, dbService, printStream);
     }
 
     @Test
@@ -39,7 +39,7 @@ class CommandHandlerTest {
         Mockito.when(userService.getOrCreateUser("Alice")).thenReturn(user1);
         Mockito.when(userService.getOrCreateUser("Bob")).thenReturn(user2);
 
-        commandHandler.handleInput("Alice follows Bob");
+        defaultCommandHandler.handleInput("Alice follows Bob");
 
         Mockito.verify(userService).getOrCreateUser("Alice");
         Mockito.verify(userService).getOrCreateUser("Bob");
@@ -53,7 +53,7 @@ class CommandHandlerTest {
         Mockito.when(userService.getOrCreateUser("Alice")).thenReturn(user1);
         Mockito.when(dbService.getMessages(user1)).thenReturn(Collections.singleton(message));
 
-        commandHandler.handleInput("Alice");
+        defaultCommandHandler.handleInput("Alice");
 
         Mockito.verify(dbService).getMessages(user1);
         Mockito.verify(printStream).println("MSG");
@@ -68,7 +68,7 @@ class CommandHandlerTest {
         Mockito.when(userService.getOrCreateUser("Alice")).thenReturn(user1);
         Mockito.when(dbService.getWall(user1)).thenReturn(Collections.singleton(message));
 
-        commandHandler.handleInput("Alice wall");
+        defaultCommandHandler.handleInput("Alice wall");
 
         Mockito.verify(dbService).getWall(user1);
         Mockito.verify(printStream).println("MSG");
@@ -81,7 +81,7 @@ class CommandHandlerTest {
     void testPostCommand() {
         Mockito.when(userService.getOrCreateUser("Alice")).thenReturn(user1);
 
-        commandHandler.handleInput("Alice -> This is a message");
+        defaultCommandHandler.handleInput("Alice -> This is a message");
 
         Mockito.verify(userService).getOrCreateUser("Alice");
         Mockito.verify(dbService).addMessage("This is a message", user1);

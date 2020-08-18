@@ -31,8 +31,4 @@ public class InMemoryUserService implements UserService {
     Map<String, User> getAllUsers() {
         return this.userMap;
     }
-
-    void clear() {
-        this.userMap.clear();
-    }
 }

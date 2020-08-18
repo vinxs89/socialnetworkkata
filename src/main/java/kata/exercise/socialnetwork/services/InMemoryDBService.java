@@ -3,8 +3,8 @@ package kata.exercise.socialnetwork.services;
 import kata.exercise.socialnetwork.models.Message;
 import kata.exercise.socialnetwork.models.User;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ public class InMemoryDBService implements DBService {
 
     @Override
     public void addMessage(String text, User user) {
-        Message message = new Message(text, user, new Date());
+        Message message = new Message(text, user, LocalDateTime.now());
         messages.addFirst(message);
     }
 
@@ -35,10 +35,6 @@ public class InMemoryDBService implements DBService {
 
     List<Message> getAllMessages() {
         return messages;
-    }
-
-    void clear() {
-        messages.clear();
     }
 
     private boolean isUserMessage(Message message, User user) {

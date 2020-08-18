@@ -1,4 +1,4 @@
-package kata.exercise.socialnetwork;
+package kata.exercise.socialnetwork.commandhandler;
 
 import java.util.regex.Pattern;
 

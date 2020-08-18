@@ -1,5 +1,6 @@
-package kata.exercise.socialnetwork;
+package kata.exercise.socialnetwork.commandhandler;
 
+import kata.exercise.socialnetwork.commandhandler.Command;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;

@@ -1,23 +1,24 @@
 package kata.exercise.socialnetwork;
 
+import kata.exercise.socialnetwork.commandhandler.DefaultCommandHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Scanner;
 
-public class ApplicationTest {
+public class ApplicationUnitTest {
 
     private Application application;
 
     private Scanner scanner;
-    private CommandHandler commandHandler;
+    private DefaultCommandHandler defaultCommandHandler;
 
     @BeforeEach
     void prepare() {
         scanner = Mockito.mock(Scanner.class);
-        commandHandler = Mockito.mock(CommandHandler.class);
-        application = new Application(scanner, commandHandler);
+        defaultCommandHandler = Mockito.mock(DefaultCommandHandler.class);
+        application = new Application(scanner, defaultCommandHandler);
     }
 
     @Test
@@ -31,8 +32,8 @@ public class ApplicationTest {
         application.run();
 
         Mockito.verify(scanner, Mockito.times(3)).nextLine();
-        Mockito.verify(commandHandler).handleInput(input1);
-        Mockito.verify(commandHandler).handleInput(input2);
-        Mockito.verifyNoMoreInteractions(scanner, commandHandler);
+        Mockito.verify(defaultCommandHandler).handleInput(input1);
+        Mockito.verify(defaultCommandHandler).handleInput(input2);
+        Mockito.verifyNoMoreInteractions(scanner, defaultCommandHandler);
     }
 }

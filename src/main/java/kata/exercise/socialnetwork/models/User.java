@@ -17,6 +17,10 @@ public class User {
         return name;
     }
 
+    Set<User> getFollowing() {
+        return following;
+    }
+
     public void follow(User anotherUser) {
         following.add(anotherUser);
     }

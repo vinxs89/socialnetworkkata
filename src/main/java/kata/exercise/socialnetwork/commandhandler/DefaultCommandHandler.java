@@ -1,4 +1,4 @@
-package kata.exercise.socialnetwork;
+package kata.exercise.socialnetwork.commandhandler;
 
 import kata.exercise.socialnetwork.models.Message;
 import kata.exercise.socialnetwork.models.User;
@@ -9,14 +9,15 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
-public class CommandHandler implements InputHandler {
+public class DefaultCommandHandler implements CommandHandler {
 
     private UserService userService;
     private DBService dbService;
     private PrintStream printStream;
 
-    CommandHandler(UserService userService, DBService dbService, PrintStream printStream) {
+    public DefaultCommandHandler(UserService userService, DBService dbService, PrintStream printStream) {
         this.userService = userService;
         this.dbService = dbService;
         this.printStream = printStream;
@@ -28,7 +29,7 @@ public class CommandHandler implements InputHandler {
         String[] splitInput = input.split(" ");
         User user = userService.getOrCreateUser(splitInput[0]);
 
-        switch (command) {
+        switch (Objects.requireNonNull(command)) {
             case POST:
                 List<String> toList = Arrays.asList(splitInput);
                 String message = String.join(" ", toList.subList(2, toList.size()));
