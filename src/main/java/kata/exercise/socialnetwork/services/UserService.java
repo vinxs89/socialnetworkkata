@@ -1,4 +1,4 @@
-package kata.exercise.socialnetwork.database;
+package kata.exercise.socialnetwork.services;
 
 import kata.exercise.socialnetwork.models.User;
 

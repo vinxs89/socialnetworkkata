@@ -1,6 +1,5 @@
 package kata.exercise.socialnetwork.models;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,12 +17,11 @@ public class User {
         return name;
     }
 
-    public Set<User> getFollowing() {
-        return Collections.unmodifiableSet(following);
-    }
-
     public void follow(User anotherUser) {
         following.add(anotherUser);
     }
 
+    public boolean follows(User user) {
+        return following.contains(user);
+    }
 }

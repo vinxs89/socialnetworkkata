@@ -1,24 +1,26 @@
-package kata.exercise.socialnetwork.database;
+package kata.exercise.socialnetwork.services;
 
 import kata.exercise.socialnetwork.models.Message;
 import kata.exercise.socialnetwork.models.User;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class InMemoryDBService implements DBService {
 
-    public static final InMemoryDBService INSTANCE = new InMemoryDBService();
-    private List<Message> messages = new ArrayList<>();
+    private static final InMemoryDBService INSTANCE = new InMemoryDBService();
+    private LinkedList<Message> messages = new LinkedList<>();
 
     private InMemoryDBService() {
     }
 
     @Override
-    public void addMessage(Message message) {
-        messages.add(message);
+    public void addMessage(String text, User user) {
+        Message message = new Message(text, user, new Date());
+        messages.addFirst(message);
     }
 
     @Override
@@ -44,6 +46,10 @@ public class InMemoryDBService implements DBService {
     }
 
     private boolean isMessageInWall(Message message, User user) {
-        return isUserMessage(message, user) || user.getFollowing().contains(message.getUser());
+        return isUserMessage(message, user) || user.follows(message.getUser());
+    }
+
+    public static InMemoryDBService getInstance() {
+        return INSTANCE;
     }
 }

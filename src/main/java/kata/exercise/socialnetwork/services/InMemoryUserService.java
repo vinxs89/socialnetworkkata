@@ -1,4 +1,4 @@
-package kata.exercise.socialnetwork.database;
+package kata.exercise.socialnetwork.services;
 
 import kata.exercise.socialnetwork.models.User;
 
@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class InMemoryUserService implements UserService {
 
-    public static final InMemoryUserService INSTANCE = new InMemoryUserService();
+    private static final InMemoryUserService INSTANCE = new InMemoryUserService();
     private Map<String, User> userMap = new HashMap<>();
 
     private InMemoryUserService() {
@@ -22,6 +22,10 @@ public class InMemoryUserService implements UserService {
             this.userMap.put(id, user);
             return user;
         }
+    }
+
+    public static InMemoryUserService getInstance() {
+        return INSTANCE;
     }
 
     Map<String, User> getAllUsers() {

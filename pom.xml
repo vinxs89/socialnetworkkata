@@ -17,8 +17,8 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.10.19</version>
+            <artifactId>mockito-inline</artifactId>
+            <version>3.5.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -32,7 +32,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>kata.exercise.socialnetwork.Main</mainClass>
+                            <mainClass>kata.exercise.socialnetwork.Application</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -40,6 +40,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>

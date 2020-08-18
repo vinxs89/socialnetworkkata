@@ -1,4 +1,4 @@
-package kata.exercise.socialnetwork.database;
+package kata.exercise.socialnetwork.services;
 
 import kata.exercise.socialnetwork.models.Message;
 import kata.exercise.socialnetwork.models.User;
@@ -7,43 +7,68 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryDBServiceTest {
 
-    private InMemoryDBService dbService = InMemoryDBService.INSTANCE;
+    private InMemoryDBService dbService = InMemoryDBService.getInstance();
+
+    private User user1;
+    private User user2;
+    private Message message1;
+    private Message message2;
+    private String text1;
+    private String text2;
 
     @BeforeEach
-    void clearMessages() {
-        this.dbService.clear();
+    void init() {
+        this.dbService.getAllMessages().clear();
+
+        user1 = Mockito.mock(User.class);
+        user2 = Mockito.mock(User.class);
+        message1 = Mockito.mock(Message.class);
+        message2 = Mockito.mock(Message.class);
+        text1 = "TXT1";
+        text2 = "TXT2";
     }
 
     @Test
     void addMessage() {
-        Message message = Mockito.mock(Message.class);
-
         List<Message> allMessages = this.dbService.getAllMessages();
         assertTrue(allMessages.isEmpty());
 
-        this.dbService.addMessage(message);
+        this.dbService.addMessage(text1, user1);
 
         allMessages = this.dbService.getAllMessages();
         assertEquals(1, allMessages.size());
 
         Message retrievedMessage = allMessages.get(0);
-        assertSame(message, retrievedMessage);
+        assertSame(text1, retrievedMessage.getText());
+        assertSame(user1, retrievedMessage.getUser());
+    }
+
+    @Test
+    void testReverseOrderAddMessage() {
+        List<Message> allMessages = this.dbService.getAllMessages();
+        assertTrue(allMessages.isEmpty());
+
+        this.dbService.addMessage(text1, user1);
+        this.dbService.addMessage(text2, user1);
+
+        allMessages = this.dbService.getAllMessages();
+        assertEquals(2, allMessages.size());
+
+        Message firstMessage = allMessages.get(0);
+        assertSame(text2, firstMessage.getText());
+
+        Message secondMessage = allMessages.get(1);
+        assertSame(text1, secondMessage.getText());
     }
 
     @Test
     void testGetExistingMessages() {
-        User user1 = Mockito.mock(User.class);
-        User user2 = Mockito.mock(User.class);
-        Message message1 = Mockito.mock(Message.class);
-        Message message2 = Mockito.mock(Message.class);
-
         Mockito.when(message1.getUser()).thenReturn(user1);
         Mockito.when(message2.getUser()).thenReturn(user2);
 
@@ -62,11 +87,6 @@ class InMemoryDBServiceTest {
 
     @Test
     void testNonExistingMessages() {
-        User user1 = Mockito.mock(User.class);
-        User user2 = Mockito.mock(User.class);
-        User user1Bis = Mockito.mock(User.class);
-        Message message1 = Mockito.mock(Message.class);
-
         Mockito.when(message1.getUser()).thenReturn(user1);
 
         List<Message> allMessages = this.dbService.getAllMessages();
@@ -74,18 +94,11 @@ class InMemoryDBServiceTest {
 
         Collection<Message> messagesUser2 = this.dbService.getMessages(user2);
         assertTrue(messagesUser2.isEmpty());
-
-        Collection<Message> messagesUser1Bis = this.dbService.getMessages(user1Bis);
-        assertTrue(messagesUser1Bis.isEmpty());
     }
 
     @Test
     void testWallBeforeFollowing() {
-        User user1 = Mockito.mock(User.class);
-        User user2 = Mockito.mock(User.class);
-        Message message1 = Mockito.mock(Message.class);
-        Message message2 = Mockito.mock(Message.class);
-
+        Mockito.when(user1.follows(user2)).thenReturn(false);
         Mockito.when(message1.getUser()).thenReturn(user1);
         Mockito.when(message2.getUser()).thenReturn(user2);
 
@@ -104,12 +117,7 @@ class InMemoryDBServiceTest {
 
     @Test
     void testWallAfterFollowing() {
-        User user1 = Mockito.mock(User.class);
-        User user2 = Mockito.mock(User.class);
-        Message message1 = Mockito.mock(Message.class);
-        Message message2 = Mockito.mock(Message.class);
-
-        Mockito.when(user1.getFollowing()).thenReturn(Collections.singleton(user2));
+        Mockito.when(user1.follows(user2)).thenReturn(true);
         Mockito.when(message1.getUser()).thenReturn(user1);
         Mockito.when(message2.getUser()).thenReturn(user2);
 
