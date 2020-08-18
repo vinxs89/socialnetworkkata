@@ -37,7 +37,7 @@ public class ApplicationIntegrationTest {
     }
 
     @Test
-    void testCommandRedirection() {
+    void integrationTest() {
         String[] inputs = new String[]{
                 "Alice -> alice first message",
                 "Alice",

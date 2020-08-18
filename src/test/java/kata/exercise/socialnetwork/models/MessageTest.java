@@ -26,8 +26,8 @@ class MessageTest {
             mockDateTime.when(LocalDateTime::now).thenReturn(now);
             Message message = new Message("text", new User("user"), date);
 
-            assertEquals("text (result)", message.getTextString());
-            assertEquals("user - text (result)", message.getMessageString());
+            assertEquals("text (result)", message.formatForUser());
+            assertEquals("user - text (result)", message.formatForWall());
 
             mockTimeUtils.verify(times(2), () -> TimeUtils.socialPrint(date, now));
             mockDateTime.verify(times(2), LocalDateTime::now);

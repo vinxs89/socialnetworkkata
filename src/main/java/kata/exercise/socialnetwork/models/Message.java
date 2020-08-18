@@ -24,11 +24,11 @@ public class Message {
         return user;
     }
 
-    public String getTextString() {
+    public String formatForUser() {
         return String.format("%s (%s)", text, TimeUtils.socialPrint(date, LocalDateTime.now()));
     }
 
-    public String getMessageString() {
+    public String formatForWall() {
         return String.format("%s - %s (%s)", user.getName(), text, TimeUtils.socialPrint(date, LocalDateTime.now()));
     }
 }

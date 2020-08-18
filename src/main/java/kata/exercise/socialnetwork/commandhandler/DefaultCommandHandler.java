@@ -37,7 +37,7 @@ public class DefaultCommandHandler implements CommandHandler {
                 break;
             case READ:
                 Collection<Message> userMessages = this.dbService.getMessages(user);
-                userMessages.forEach(m -> this.printStream.println(m.getTextString()));
+                userMessages.forEach(m -> this.printStream.println(m.formatForUser()));
                 break;
             case FOLLOW:
                 User user2 = this.userService.getOrCreateUser(splitInput[2]);
@@ -45,7 +45,7 @@ public class DefaultCommandHandler implements CommandHandler {
                 break;
             case WALL:
                 Collection<Message> userWall = this.dbService.getWall(user);
-                userWall.forEach(m -> this.printStream.println(m.getMessageString()));
+                userWall.forEach(m -> this.printStream.println(m.formatForWall()));
                 break;
         }
     }

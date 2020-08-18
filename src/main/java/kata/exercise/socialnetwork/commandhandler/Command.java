@@ -15,8 +15,8 @@ public enum Command {
     }
 
     public static Command fromInput(String input) {
-        for(Command command : Command.values()) {
-            if(command.pattern.matcher(input).matches()) {
+        for (Command command : Command.values()) {
+            if (command.pattern.matcher(input).matches()) {
                 return command;
             }
         }

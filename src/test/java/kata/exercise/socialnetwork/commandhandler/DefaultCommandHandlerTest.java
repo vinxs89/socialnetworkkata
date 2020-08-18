@@ -49,7 +49,7 @@ class DefaultCommandHandlerTest {
 
     @Test
     void testReadCommand() {
-        Mockito.when(message.getTextString()).thenReturn("MSG");
+        Mockito.when(message.formatForUser()).thenReturn("MSG");
         Mockito.when(userService.getOrCreateUser("Alice")).thenReturn(user1);
         Mockito.when(dbService.getMessages(user1)).thenReturn(Collections.singleton(message));
 
@@ -58,13 +58,13 @@ class DefaultCommandHandlerTest {
         Mockito.verify(dbService).getMessages(user1);
         Mockito.verify(printStream).println("MSG");
         Mockito.verify(userService).getOrCreateUser("Alice");
-        Mockito.verify(message).getTextString();
+        Mockito.verify(message).formatForUser();
         Mockito.verifyNoMoreInteractions(printStream, userService, dbService, user1);
     }
 
     @Test
     void testWallCommand() {
-        Mockito.when(message.getMessageString()).thenReturn("MSG");
+        Mockito.when(message.formatForWall()).thenReturn("MSG");
         Mockito.when(userService.getOrCreateUser("Alice")).thenReturn(user1);
         Mockito.when(dbService.getWall(user1)).thenReturn(Collections.singleton(message));
 
@@ -73,7 +73,7 @@ class DefaultCommandHandlerTest {
         Mockito.verify(dbService).getWall(user1);
         Mockito.verify(printStream).println("MSG");
         Mockito.verify(userService).getOrCreateUser("Alice");
-        Mockito.verify(message).getMessageString();
+        Mockito.verify(message).formatForWall();
         Mockito.verifyNoMoreInteractions(printStream, userService, dbService, user1);
     }
 
